@@ -20,7 +20,7 @@ const Pin = ({ pin, className }: IPin) => {
   const user = fetchUser();
   const { image, _id, save, destination, postedBy } = pin;
 
-  const alreadySaved = !!save.filter((item) => item.postedBy._id === user.sub).length;
+  const alreadySaved = !!save?.filter((item) => item.postedBy._id === user.sub).length;
 
   const savePin = (id: string) => {
     if (!alreadySaved) {
@@ -56,12 +56,12 @@ const Pin = ({ pin, className }: IPin) => {
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
         onClick={() => navigate(`/pin-detail/${_id}`)}
-        className='relative p-1 cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
+        className='relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
       >
         <img className='rounded-lg w-full' alt='user-post' src={urlFor(image).width(250).url()} />
         {postHovered && (
           <div
-            className='absolute top-0 w-full h-full flex flex-col justify-between pt-1 pr-2 pt-2 pb-2 z-50'
+            className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50'
             style={{ height: '100%' }}
           >
             <div className='flex items-center justify-between'>
