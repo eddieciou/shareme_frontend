@@ -5,8 +5,22 @@ export type TUser = {
   image: string;
 };
 
+export type TComment = {
+  _id: string;
+  comment: string;
+  postedBy: {
+    image: string;
+    userName: string;
+    _id: string;
+  };
+};
+
 export type TPin = {
+  title: string;
+  about: string;
   destination: string;
+  comments: Array<TComment>;
+  category: string;
   image: {
     asset: {
       url: string;
