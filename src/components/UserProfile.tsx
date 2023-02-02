@@ -5,15 +5,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
 import { client } from '../client';
 import { MasonryLayout, Spinner } from './index';
-import { TUser } from '../types';
+import { TPin, TUser } from '../types';
 
 const randomImage = 'https://source.unsplash.com/1600x900/?nature,photography';
 
+const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
+const notActiveBtnStyles =
+  'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
+
 const UserProfile = () => {
   const [user, setUser] = useState<TUser | null>(null);
-  const [pins, setPins] = useState(null);
-  const [text, setText] = useState<'Create' | 'Saved'>('Create');
-  const [activeBtn, setActiveBtn] = useState('create');
+  const [pins, setPins] = useState<Array<TPin>>([]);
+  const [text, setText] = useState<'Created' | 'Saved'>('Created');
+  const [activeBtn, setActiveBtn] = useState('created');
 
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -30,6 +34,20 @@ const UserProfile = () => {
       setUser(data[0]);
     });
   }, [userId]);
+
+  useEffect(() => {
+    if (text === 'Created') {
+      const createdPinsQuery = userCreatedPinsQuery(userId || '');
+      client.fetch(createdPinsQuery).then((data) => {
+        setPins(data);
+      });
+    } else {
+      const savedPinsQuery = userSavedPinsQuery(userId || '');
+      client.fetch(savedPinsQuery).then((data) => {
+        setPins(data);
+      });
+    }
+  }, [text, userId]);
 
   if (!user) return <Spinner message='Loading profile...' />;
 
@@ -61,6 +79,43 @@ const UserProfile = () => {
               )}
             </div>
           </div>
+          <div className='text-center mb-7'>
+            <button
+              type='button'
+              onClick={(e) => {
+                const textContent = (e.target as HTMLElement).textContent;
+                if (textContent === 'Created') {
+                  setText(textContent);
+                }
+                setActiveBtn('created');
+              }}
+              className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles}`}
+            >
+              Created
+            </button>
+            <button
+              type='button'
+              onClick={(e) => {
+                const textContent = (e.target as HTMLElement).textContent;
+                if (textContent === 'Saved') {
+                  setText(textContent);
+                }
+                setActiveBtn('saved');
+              }}
+              className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles}`}
+            >
+              Saved
+            </button>
+          </div>
+          {pins.length ? (
+            <div className='px-2'>
+              <MasonryLayout pins={pins} />
+            </div>
+          ) : (
+            <div className='flex justify-center font-bold items-center w-full text-xl mt-2'>
+              No Pins Founds
+            </div>
+          )}
         </div>
       </div>
     </div>

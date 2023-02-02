@@ -5,6 +5,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 
 import logo from '../assets/eddieLogo.png';
 import { TUser } from '../types';
+import { categories } from '../utils/data';
 
 interface ISidebar {
   user: TUser;
@@ -12,18 +13,9 @@ interface ISidebar {
 }
 
 const isActiveStyle =
-  'flex items-center px-5 gap3 font-extrabold border-r-4 border-black transition-all duration-200 ease-in-out capitalize';
+  'flex items-center px-5 gap-3 font-extrabold border-r-4 border-black transition-all duration-200 ease-in-out capitalize';
 const isNotActiveStyle =
-  'flex items-center px-5 gap3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize';
-
-const categories = [
-  { name: 'Animals' },
-  { name: 'Wallpapers' },
-  { name: 'Photography' },
-  { name: 'Gaming' },
-  { name: 'Coding' },
-  { name: 'Other' },
-];
+  'flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize';
 
 const Sidebar = ({ user, closeToggle }: ISidebar) => {
   const handleCloseSidebar = () => {
@@ -57,6 +49,7 @@ const Sidebar = ({ user, closeToggle }: ISidebar) => {
               className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
               onClick={handleCloseSidebar}
             >
+              <img src={category.image} className='w-8 h-8 rounded-full shadow-sm' alt='category' />
               {category.name}
             </NavLink>
           ))}
