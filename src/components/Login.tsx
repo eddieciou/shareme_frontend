@@ -14,8 +14,6 @@ const Login = () => {
       jwtDecode(response.credential);
     localStorage.setItem('user', JSON.stringify(userObject));
 
-    console.log(userObject);
-
     const {
       sub: googleId,
       picture: imageUrl,
@@ -29,9 +27,9 @@ const Login = () => {
       image: imageUrl,
     };
 
-    client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true });
-    });
+    // client.createIfNotExists(doc).then(() => {
+    //   navigate('/', { replace: true });
+    // });
   };
 
   useEffect(() => {
