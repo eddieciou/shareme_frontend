@@ -13,7 +13,11 @@ const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 o
 const notActiveBtnStyles =
   'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
 
-const UserProfile = () => {
+interface IUserProfile {
+  loginUser: TUser;
+}
+
+const UserProfile = ({ loginUser }: IUserProfile) => {
   const [user, setUser] = useState<TUser | null>(null);
   const [pins, setPins] = useState<Array<TPin>>([]);
   const [text, setText] = useState<'Created' | 'Saved'>('Created');
@@ -68,7 +72,7 @@ const UserProfile = () => {
             />
             <h1 className='font-bold text-3xl text-center mt-3'>{user.userName}</h1>
             <div className='absolute top-0 z-1 right-0 p-2'>
-              {userId === user._id && (
+              {loginUser._id === user._id && (
                 <button
                   type='button'
                   className='bg-white p-2 rounded-full cursor-pointer outline-none shadow-md'

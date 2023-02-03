@@ -11,9 +11,8 @@ import { fetchUser } from '../utils/fetchUser';
 
 interface IPin {
   pin: TPin;
-  className: string;
 }
-const Pin = ({ pin, className }: IPin) => {
+const Pin = ({ pin }: IPin) => {
   const [postHovered, setPostHovered] = useState(false);
 
   const navigate = useNavigate();
@@ -123,7 +122,7 @@ const Pin = ({ pin, className }: IPin) => {
           </div>
         )}
       </div>
-      <Link to={`user-profile/${postedBy._id}`} className='flex gap-2 mt-2 items-center'>
+      <Link to={`/user-profile/${postedBy._id}`} className='flex gap-2 mt-2 items-center'>
         <img
           className='w-8 h-8 rounded-full object-cover'
           src={postedBy.image}
