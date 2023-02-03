@@ -27,9 +27,9 @@ const Login = () => {
       image: imageUrl,
     };
 
-    // client.createIfNotExists(doc).then(() => {
-    //   navigate('/', { replace: true });
-    // });
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true });
+    });
   };
 
   useEffect(() => {
